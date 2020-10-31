@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 
 const container = {
@@ -9,30 +9,68 @@ const container = {
 }
 
 const card = {
-    border: '2px dotted pink',
+    border: '2px dotted green',
     alignSelf: 'center',
+    padding: '1em'
 }
 
 export default function MultiStepForm() {
 
+    const [options, setOptions] = useState([]);
+    const [textValue, setTextValue] = useState("");
+    const [radioValue, setRadioValue] = useState("");
+
+    const handleOptionAdd = () => {
+        if (textValue.trim().length === 0) return;
+        setTextValue("");
+        setOptions([
+            ...options,
+            { label: textValue, value: textValue},
+        ])
+    }
+
     const { register, handleSubmit } = useForm();
     const onSubmit = data => console.log(data);
+
 
     return (
         <div style={container}>
             <div style={card}>
-                <p>A Form For Fun</p>
+
+                <h1>A Form For Fun</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <p><label>Name</label></p>
+                    
+                    <h3><label>Name</label></h3>
                     <input name="firstName" ref={register} />
-                    <p><label>Gender</label></p>
-                    <input type="radio" name="gender" id="genderChoice1" value="female" ref={register}/><label for="genderChoice1">female</label><br />
-                    <input type="radio" name="gender" id="genderChoice2" value="lemur" ref={register}/><label for="genderChoice2">lemur</label><br />
-                    <input type="radio" name="gender" id="genderChoice3" value="spider" ref={register}/><label for="genderChoice3">spider</label><br />
-                    <input type="radio" name="gender" id="genderChoice4" value="lemur" ref={register}/><label for="genderChoice4">cat</label><br />
-                    <input type="radio" name="gender" id="genderChoice5" value="coffee cake" ref={register}/><label for="genderChoice5">coffee cake</label><br />
-                    <input type="radio" name="gender" ref={register}/><input type="text" name="gender" placeholder="other" ref={register}/>
-                    <p><button type="submit">submit</button></p>
+                    
+                    <h3><label>What ice cream flavors would you like?</label></h3>
+                    <input 
+                        type="text"
+                        value={textValue}
+                        onChange={(e) => setTextValue(e.target.value)}
+                    />
+                    <button onClick={handleOptionAdd}>Add</button>
+
+                    <div>
+                        {options.map((option) => (
+                            <div>
+                                <input 
+                                    type="radio"
+                                    name="iceCream"
+                                    value={option.value}
+                                    checked={radioValue === option.value}
+                                    onChange={(e) => setRadioValue(e.target.value)}
+                                    ref={register}
+                                />
+                                <label>{option.label}</label>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div>
+                        <button type="submit">Submit</button>
+                    </div>
+
                 </form>
             </div>
         </div>
