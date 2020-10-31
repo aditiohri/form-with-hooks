@@ -1,8 +1,9 @@
+import MultiStepForm from "./components/MultiStepForm";
 
 function App() {
   return (
-    <div className="App">
-    <p> hey!!</p>
+    <div>
+     <MultiStepForm />
     </div>
   );
 }
