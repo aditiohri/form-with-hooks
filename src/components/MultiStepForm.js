@@ -37,18 +37,23 @@ export default function MultiStepForm() {
       <div style={card}>
         <h1>A Form For Fun</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Form1 
+          <Form1
             ref={register}
             setTextValue={setTextValue}
+            textValue={textValue}
             // prop to change step value
-          />
+            />
           <Form2
             ref={register}
             setTextValue={setTextValue}
-          />
+            textValue={textValue}
+            // prop to change step value
+            />
           <Form3
             ref={register}
             setTextValue={setTextValue}
+            textValue={textValue}
+            // prop to change step value
           />
 
           <h3>
