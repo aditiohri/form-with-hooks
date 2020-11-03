@@ -19,19 +19,64 @@ const card = {
 };
 
 export default function MultiStepForm() {
-
   const [textValue, setTextValue] = useState("");
   const [count, setCount] = useState(0);
 
   const nextPage = () => {
     setCount(count + 1);
-    console.log(count);
+    console.log(textValue)
   };
-  
+
   const prevPage = () => {
     setCount(count - 1);
-    console.log(count);
-  }
+  };
+
+  const step = (count) => {
+    switch (count) {
+      case 0:
+        return (
+          <>
+            <button onClick={nextPage}>Begin</button>
+          </>
+        );
+      case 1:
+        return (
+          <Form1
+            ref={register}
+            setTextValue={setTextValue}
+            textValue={textValue}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          />
+        );
+      case 2:
+        return (
+          <Form2
+            ref={register}
+            setTextValue={setTextValue}
+            textValue={textValue}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          />
+        );
+      case 3:
+        return (
+          <Form3
+            ref={register}
+            setTextValue={setTextValue}
+            textValue={textValue}
+            nextPage={nextPage}
+            prevPage={prevPage}
+          />
+        );
+      default:
+        return (
+          <>
+            <button onClick={nextPage}>Begin</button>
+          </>
+        );
+    }
+  };
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
@@ -40,27 +85,9 @@ export default function MultiStepForm() {
     <div style={container}>
       <div style={card}>
         <h1>A Form For Fun</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Form1
-            ref={register}
-            setTextValue={setTextValue}
-            textValue={textValue}
-            />
-          <Form2
-            ref={register}
-            setTextValue={setTextValue}
-            textValue={textValue}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            />
-          <Form3
-            ref={register}
-            setTextValue={setTextValue}
-            textValue={textValue}
-            // prop to change step value
-          />
-          </form>
-          </div>
+        <p>You clicked {count} times</p>
+        <form onSubmit={handleSubmit(onSubmit)}>{step(count)}</form>
+      </div>
     </div>
   );
 }

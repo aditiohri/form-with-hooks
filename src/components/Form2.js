@@ -15,8 +15,8 @@ export default function Form2({ ref, setTextValue, textValue, nextPage, prevPage
         ref={ref}
       />
       <div>
-        <button onClick={nextPage}>Next</button>
         <button onClick={prevPage}>Back</button>
+        <button onClick={nextPage}>Next</button>
       </div>
     </div>
   );

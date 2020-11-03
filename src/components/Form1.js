@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function Form1({ ref, setTextValue, textValue, count, changeCount }) {
+export default function Form1({
+  ref,
+  setTextValue,
+  textValue,
+  nextPage,
+  prevPage,
+}) {
   return (
     <div>
       <label>
@@ -13,7 +19,8 @@ export default function Form1({ ref, setTextValue, textValue, count, changeCount
         ref={ref}
       />
       <div>
-          <button onClick={changeCount}>Next</button>
+        <button onClick={prevPage}>Back</button>
+        <button onClick={nextPage}>Next</button>
       </div>
     </div>
   );
