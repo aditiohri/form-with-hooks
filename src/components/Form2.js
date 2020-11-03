@@ -12,6 +12,10 @@ export default function Form2({ ref, setTextValue, textValue }) {
         onChange={(e) => setTextValue(e.target.value)}
         ref={ref}
       />
+      <div>
+        <button>Next</button>
+        <button>Back</button>
+      </div>
     </div>
   );
 }

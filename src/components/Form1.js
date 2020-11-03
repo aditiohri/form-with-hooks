@@ -12,6 +12,9 @@ export default function Form1({ ref, setTextValue, textValue }) {
         onChange={(e) => setTextValue(e.target.value)}
         ref={ref}
       />
+      <div>
+          <button>Next</button>
+      </div>
     </div>
   );
 }
