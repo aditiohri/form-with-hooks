@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Form1({ ref, setTextValue, textValue }) {
+export default function Form1({ ref, setTextValue, textValue, count, changeCount }) {
   return (
     <div>
       <label>
@@ -13,7 +13,7 @@ export default function Form1({ ref, setTextValue, textValue }) {
         ref={ref}
       />
       <div>
-          <button>Next</button>
+          <button onClick={changeCount}>Next</button>
       </div>
     </div>
   );

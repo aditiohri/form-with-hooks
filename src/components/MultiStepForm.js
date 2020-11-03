@@ -19,15 +19,19 @@ const card = {
 };
 
 export default function MultiStepForm() {
-  const [options, setOptions] = useState([]);
-  const [textValue, setTextValue] = useState("");
-  const [radioValue, setRadioValue] = useState("");
 
-  const handleOptionAdd = () => {
-    if (textValue.trim().length === 0) return;
-    setTextValue("");
-    setOptions([...options, { label: textValue, value: textValue }]);
+  const [textValue, setTextValue] = useState("");
+  const [count, setCount] = useState(0);
+
+  const nextPage = () => {
+    setCount(count + 1);
+    console.log(count);
   };
+  
+  const prevPage = () => {
+    setCount(count - 1);
+    console.log(count);
+  }
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
@@ -41,13 +45,13 @@ export default function MultiStepForm() {
             ref={register}
             setTextValue={setTextValue}
             textValue={textValue}
-            // prop to change step value
             />
           <Form2
             ref={register}
             setTextValue={setTextValue}
             textValue={textValue}
-            // prop to change step value
+            nextPage={nextPage}
+            prevPage={prevPage}
             />
           <Form3
             ref={register}
@@ -55,44 +59,8 @@ export default function MultiStepForm() {
             textValue={textValue}
             // prop to change step value
           />
-
-          <h3>
-            <label>Name</label>
-          </h3>
-
-          <input name="firstName" ref={register} />
-
-          <h3>
-            <label>What ice cream flavors would you like?</label>
-          </h3>
-          <input
-            type="text"
-            value={textValue}
-            onChange={(e) => setTextValue(e.target.value)}
-          />
-          <button onClick={handleOptionAdd}>Add</button>
-
-          <div>
-            {options.map((option) => (
-              <div>
-                <input
-                  type="radio"
-                  name="iceCream"
-                  value={option.value}
-                  checked={radioValue === option.value}
-                  onChange={(e) => setRadioValue(e.target.value)}
-                  ref={register}
-                />
-                <label>{option.label}</label>
-              </div>
-            ))}
+          </form>
           </div>
-
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      </div>
     </div>
   );
 }
