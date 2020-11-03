@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import Form1 from "./Form1";
-import Form2 from "./Form2";
-import Form3 from "./Form3";
+import Form from './Form'
 import Review from "./Review";
 
 const container = {
@@ -25,7 +23,6 @@ export default function MultiStepForm() {
 
   const nextPage = () => {
     setCount(count + 1);
-    console.log(textValue);
   };
 
   const prevPage = () => {
@@ -46,32 +43,41 @@ export default function MultiStepForm() {
         );
       case 1:
         return (
-          <Form1
-            ref={register}
+          <Form
+            label="What is your favorite color?"
+            type="text"
+            name="color"
             setTextValue={setTextValue}
             textValue={textValue}
             nextPage={nextPage}
             prevPage={prevPage}
+            ref={register}
           />
         );
       case 2:
         return (
-          <Form2
-            ref={register}
-            setTextValue={setTextValue}
-            textValue={textValue}
-            nextPage={nextPage}
-            prevPage={prevPage}
+          <Form
+          label="What is your favorite animal?"
+          type="text"
+          name="animal"
+          textValue={textValue}
+          setTextValue={setTextValue}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          ref={register}
           />
         );
       case 3:
         return (
-          <Form3
-            ref={register}
-            setTextValue={setTextValue}
-            textValue={textValue}
-            nextPage={nextPage}
-            prevPage={prevPage}
+          <Form
+          label="What is your favorite body of water?"
+          type="text"
+          name="water"
+          setTextValue={setTextValue}
+          textValue={textValue}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          ref={register}
           />
         );
       case 4:

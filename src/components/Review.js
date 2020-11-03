@@ -7,6 +7,7 @@ export default function Review({ prevPage, reStart }) {
       <div>
         <button onClick={prevPage}>Back</button>
         <button onClick={reStart}>START OVER</button>
+        <button type="submit">Submit</button>
       </div>
     </div>
   );
