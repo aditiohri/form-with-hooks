@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Form1 from "./Form1";
 import Form2 from "./Form2";
 import Form3 from "./Form3";
+import Review from "./Review";
 
 const container = {
   display: "flex",
@@ -24,11 +25,15 @@ export default function MultiStepForm() {
 
   const nextPage = () => {
     setCount(count + 1);
-    console.log(textValue)
+    console.log(textValue);
   };
 
   const prevPage = () => {
     setCount(count - 1);
+  };
+
+  const reStart = () => {
+    setCount(0);
   };
 
   const step = (count) => {
@@ -69,6 +74,8 @@ export default function MultiStepForm() {
             prevPage={prevPage}
           />
         );
+      case 4:
+        return <Review prevPage={prevPage} reStart={reStart} />;
       default:
         return (
           <>
