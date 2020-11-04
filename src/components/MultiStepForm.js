@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import {
+  StateMachineProvider,
+  createStore,
+} from "little-state-machine";
 
-import Form from './Form'
+import Form from "./Form";
 import Review from "./Review";
 
 const container = {
@@ -16,6 +19,14 @@ const card = {
   alignSelf: "center",
   padding: "1em",
 };
+
+createStore({
+  form: {
+    color: "",
+    animal: "",
+    water: "",
+  },
+});
 
 export default function MultiStepForm() {
   const [textValue, setTextValue] = useState("");
@@ -33,74 +44,53 @@ export default function MultiStepForm() {
     setCount(0);
   };
 
-  const step = (count) => {
-    switch (count) {
-      case 0:
-        return (
-          <>
-            <button onClick={nextPage}>Begin</button>
-          </>
-        );
-      case 1:
-        return (
-          <Form
-            label="What is your favorite color?"
-            type="text"
-            name="color"
-            setTextValue={setTextValue}
-            textValue={textValue}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            ref={register}
-          />
-        );
-      case 2:
-        return (
-          <Form
-          label="What is your favorite animal?"
-          type="text"
-          name="animal"
-          textValue={textValue}
-          setTextValue={setTextValue}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          ref={register}
-          />
-        );
-      case 3:
-        return (
-          <Form
-          label="What is your favorite body of water?"
-          type="text"
-          name="water"
-          setTextValue={setTextValue}
-          textValue={textValue}
-          nextPage={nextPage}
-          prevPage={prevPage}
-          ref={register}
-          />
-        );
-      case 4:
-        return <Review prevPage={prevPage} reStart={reStart} />;
-      default:
-        return (
-          <>
-            <button onClick={nextPage}>Begin</button>
-          </>
-        );
-    }
-  };
-
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
-
   return (
-    <div style={container}>
-      <div style={card}>
-        <h1>A Form For Fun</h1>
-        <p>You clicked {count} times</p>
-        <form onSubmit={handleSubmit(onSubmit)}>{step(count)}</form>
+    <StateMachineProvider>
+      <div style={container}>
+        <div style={card}>
+          <h1>A Form For Fun</h1>
+          <p>You clicked {count} times</p>
+            {count === 0 && (
+              <>
+                <button onClick={nextPage}>Begin</button>
+              </>
+            )}
+            {count === 1 && (
+              <Form
+                label="What is your favorite color?"
+                type="text"
+                name="color"
+                setTextValue={setTextValue}
+                textValue={textValue}
+                nextPage={nextPage}
+                prevPage={prevPage}
+              />
+            )}
+            {count === 2 && (
+              <Form
+                label="What is your favorite animal?"
+                type="text"
+                name="animal"
+                textValue={textValue}
+                setTextValue={setTextValue}
+                nextPage={nextPage}
+                prevPage={prevPage}
+              />
+            )}
+            {count === 3 && (
+              <Form
+                label="What is your favorite body of water?"
+                type="text"
+                name="water"
+                setTextValue={setTextValue}
+                textValue={textValue}
+                nextPage={nextPage}
+                prevPage={prevPage}
+              />
+            )}
+            {count === 4 && <Review prevPage={prevPage} reStart={reStart} />}
+        </div>
       </div>
-    </div>
+    </StateMachineProvider>
   );
 }
