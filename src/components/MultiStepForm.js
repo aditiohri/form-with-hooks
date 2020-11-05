@@ -1,78 +1,97 @@
-import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import {
+  StateMachineProvider,
+  createStore,
+} from "little-state-machine";
+
+import Form from "./Form";
+import Review from "./Review";
 
 const container = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh'
-}
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+};
 
 const card = {
-    border: '2px dotted green',
-    alignSelf: 'center',
-    padding: '1em'
-}
+  border: "2px dotted green",
+  alignSelf: "center",
+  padding: "1em",
+};
+
+createStore({
+  form: {
+    color: "",
+    animal: "",
+    water: "",
+  },
+});
+
 
 export default function MultiStepForm() {
+  const [textValue, setTextValue] = useState("");
+  const [count, setCount] = useState(0);
 
-    const [options, setOptions] = useState([]);
-    const [textValue, setTextValue] = useState("");
-    const [radioValue, setRadioValue] = useState("");
+  const nextPage = () => {
+    setCount(count + 1);
+  };
 
-    const handleOptionAdd = () => {
-        if (textValue.trim().length === 0) return;
-        setTextValue("");
-        setOptions([
-            ...options,
-            { label: textValue, value: textValue},
-        ])
-    }
+  const prevPage = () => {
+    setCount(count - 1);
+  };
 
-    const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
+  const reStart = () => {
+    setCount(0);
+  };
 
-
-    return (
-        <div style={container}>
-            <div style={card}>
-
-                <h1>A Form For Fun</h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    
-                    <h3><label>Name</label></h3>
-                    <input name="firstName" ref={register} />
-                    
-                    <h3><label>What ice cream flavors would you like?</label></h3>
-                    <input 
-                        type="text"
-                        value={textValue}
-                        onChange={(e) => setTextValue(e.target.value)}
-                    />
-                    <button onClick={handleOptionAdd}>Add</button>
-
-                    <div>
-                        {options.map((option) => (
-                            <div>
-                                <input 
-                                    type="radio"
-                                    name="iceCream"
-                                    value={option.value}
-                                    checked={radioValue === option.value}
-                                    onChange={(e) => setRadioValue(e.target.value)}
-                                    ref={register}
-                                />
-                                <label>{option.label}</label>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div>
-                        <button type="submit">Submit</button>
-                    </div>
-
-                </form>
-            </div>
+  return (
+    <StateMachineProvider>
+      <div style={container}>
+        <div style={card}>
+          <h1>A Form For Fun</h1>
+          <p>You clicked {count} times</p>
+          {count === 0 && (
+            <>
+              <button onClick={nextPage}>Begin</button>
+            </>
+          )}
+          {count === 1 && (
+            <Form
+              label="What is your favorite color?"
+              type="text"
+              name="color"
+              setTextValue={setTextValue}
+              textValue={textValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 2 && (
+            <Form
+              label="What is your favorite animal?"
+              type="text"
+              name="animal"
+              textValue={textValue}
+              setTextValue={setTextValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 3 && (
+            <Form
+              label="What is your favorite body of water?"
+              type="text"
+              name="water"
+              setTextValue={setTextValue}
+              textValue={textValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 4 && <Review prevPage={prevPage} reStart={reStart} />}
         </div>
-    )
+      </div>
+    </StateMachineProvider>
+  );
 }
