@@ -28,6 +28,7 @@ createStore({
   },
 });
 
+
 export default function MultiStepForm() {
   const [textValue, setTextValue] = useState("");
   const [count, setCount] = useState(0);
@@ -50,45 +51,45 @@ export default function MultiStepForm() {
         <div style={card}>
           <h1>A Form For Fun</h1>
           <p>You clicked {count} times</p>
-            {count === 0 && (
-              <>
-                <button onClick={nextPage}>Begin</button>
-              </>
-            )}
-            {count === 1 && (
-              <Form
-                label="What is your favorite color?"
-                type="text"
-                name="color"
-                setTextValue={setTextValue}
-                textValue={textValue}
-                nextPage={nextPage}
-                prevPage={prevPage}
-              />
-            )}
-            {count === 2 && (
-              <Form
-                label="What is your favorite animal?"
-                type="text"
-                name="animal"
-                textValue={textValue}
-                setTextValue={setTextValue}
-                nextPage={nextPage}
-                prevPage={prevPage}
-              />
-            )}
-            {count === 3 && (
-              <Form
-                label="What is your favorite body of water?"
-                type="text"
-                name="water"
-                setTextValue={setTextValue}
-                textValue={textValue}
-                nextPage={nextPage}
-                prevPage={prevPage}
-              />
-            )}
-            {count === 4 && <Review prevPage={prevPage} reStart={reStart} />}
+          {count === 0 && (
+            <>
+              <button onClick={nextPage}>Begin</button>
+            </>
+          )}
+          {count === 1 && (
+            <Form
+              label="What is your favorite color?"
+              type="text"
+              name="color"
+              setTextValue={setTextValue}
+              textValue={textValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 2 && (
+            <Form
+              label="What is your favorite animal?"
+              type="text"
+              name="animal"
+              textValue={textValue}
+              setTextValue={setTextValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 3 && (
+            <Form
+              label="What is your favorite body of water?"
+              type="text"
+              name="water"
+              setTextValue={setTextValue}
+              textValue={textValue}
+              nextPage={nextPage}
+              prevPage={prevPage}
+            />
+          )}
+          {count === 4 && <Review prevPage={prevPage} reStart={reStart} />}
         </div>
       </div>
     </StateMachineProvider>

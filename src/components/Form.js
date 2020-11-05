@@ -13,7 +13,7 @@ const Form = ({
   prevPage,
   reStart,
 }) => {
-  
+
   const { state, action } = useStateMachine(updateAction);
 
   const { register, handleSubmit } = useForm({
